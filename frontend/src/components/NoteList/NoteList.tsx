@@ -44,7 +44,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, onSelectNote, onDeleteNote, 
         {notes.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()).map(note => (
           <div
             key={note.id}
-            className={`flex items-center justify-between h-44px w-full pr-10px rounded ${selectedNoteId === note.id ? 'bg-backgroundLight' : ''}`}
+            className={`flex items-center justify-between h-44px w-full pr-10px rounded ${selectedNoteId === note.id ? 'bg-backgroundLight text-brandColor font-bold' : ''}`}
           >
             <button
               className="flex-1 text-left py-10px pl-10px mr-10px truncate hover:opacity-50"
