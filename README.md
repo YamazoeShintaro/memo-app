@@ -1,29 +1,43 @@
-## Description
+## フロントエンド技術課題
 
-NCDC フロント課題[Markdown Editor]のバックエンドリポジトリ
-![](./doc/images/overview.gif)
-
-## Installation & exec
+## インストール（ルートディレクトリ）
 
 ```bash
 # install
 $ yarn install
+```
+
+## インストール（backendディレクトリ）
+
+```bash
+# backendディレクトリに移動
+$ cd backend
+# install
+$ yarn install
 # migration
 $ yarn migration:run
+```
+
+## インストール（frontendディレクトリ）
+
+```bash
+# frontendディレクトリに移動
+$ cd frontend
+# install
+$ yarn install
+```
+
+## 実行
+
+```bash
 # start build
 $ yarn build
 # 実行
 $ yarn start
 ```
 
-## API
-
-API の Document は、  
-アプリを起動後、`http://localhost:3000/api` にて Swagger で確認できる。  
-![](./doc/images/swagger.png)
-
 ## DB を初期状態に戻す
 
 ```bash
-$ cp ./data/bk-dev.sqlite ./data/dev.sqlite
+$ cp ./backend/data/bk-dev.sqlite ./backend/data/dev.sqlite
 ```
