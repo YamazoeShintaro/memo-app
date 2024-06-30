@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // マウント時に全noteデータを取得
   useEffect(() => {
     const fetchNotes = async () => {
       try {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
     fetchNotes();
   }, []);
 
+  // 新しいnoteを追加するハンドラー
   const handleAddNote = async (note: Partial<Note>) => {
     try {
       const newNote = await createNote(note);
@@ -32,6 +34,7 @@ const App: React.FC = () => {
     }
   };
 
+  // noteを削除するハンドラー
   const handleDeleteNote = async (id: number) => {
     try {
       await deleteNote(id);
@@ -41,6 +44,7 @@ const App: React.FC = () => {
     }
   };
 
+  // noteを更新するハンドラー
   const handleUpdateNote = async (updatedNote: Note) => {
     try {
       const note = await updateNote(updatedNote.id, updatedNote);
@@ -50,9 +54,12 @@ const App: React.FC = () => {
     }
   };
 
+  if(error) {
+    return <div>{error}</div>;
+  };
+
   return (
     <div className="flex h-screen">
-      {error && <div className="error">{error}</div>}
       <div className="border-r border-backgroundLight dark:border-backgroundDark w-1/4">
         <NoteList
           notes={notes}

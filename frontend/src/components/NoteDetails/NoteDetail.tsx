@@ -12,32 +12,36 @@ type NoteDetailProps = {
 const NoteDetail: React.FC<NoteDetailProps> = ({ note, onUpdateNote }) => {
   const [editedNote, setEditedNote] = useState<Note | null>(note);
 
+  // 現在選択されているnoteをeditedNoteにセットする
   useEffect(() => {
     setEditedNote(note);
   }, [note]);
 
+  // titleが保存されたときの処理
   const handleTitleSave = (newTitle: string) => {
     if (editedNote) {
       const updatedNote = {
         ...editedNote,
         title: newTitle,
       };
-      onUpdateNote(updatedNote);
-      setEditedNote(updatedNote);
+      onUpdateNote(updatedNote); // 更新されたノートを親コンポーネントに渡す
+      setEditedNote(updatedNote); // ローカルの状態を更新
     }
   };
 
-  const handleContentSave = (newContent: string) => {
+  // bodyが保存されたときの処理
+  const handleBodySave = (newBody: string) => {
     if (editedNote) {
       const updatedNote = {
         ...editedNote,
-        body: newContent,
+        body: newBody,
       };
-      onUpdateNote(updatedNote);
-      setEditedNote(updatedNote);
+      onUpdateNote(updatedNote); // 更新されたノートを親コンポーネントに渡す
+      setEditedNote(updatedNote); // ローカルの状態を更新
     }
   };
 
+  // ノートが選択されていない場合の表示(初期表示)
   if (!note) {
     return <div></div>;
   }
@@ -49,7 +53,7 @@ const NoteDetail: React.FC<NoteDetailProps> = ({ note, onUpdateNote }) => {
           <NoteTitle title={note.title} onSave={handleTitleSave} />
         </div>
         <div className='flex-1 overflow-scroll'>
-          <NoteBody body={note.body} onSave={handleContentSave} />
+          <NoteBody body={note.body} onSave={handleBodySave} />
         </div>
       </div>
       <div className='flex justify-between items-center h-60px text-caption text-textLight'>

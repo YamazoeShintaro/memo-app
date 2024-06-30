@@ -13,14 +13,16 @@ type NoteListProps = {
 }
 
 const NoteList: React.FC<NoteListProps> = ({ notes, onSelectNote, onDeleteNote, onAddNote }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState(false); // 編集モードの状態を管理
+  const [selectedNoteId, setSelectedNoteId] = useState<number | null>(null); // 選択されているノートのIDを管理
 
+  // ノートを選択する処理
   const handleSelectNote = (note: Note) => {
     setSelectedNoteId(note.id);
     onSelectNote(note);
   };
 
+  // 新しいノートを追加する処理
   const handleAddNote = () => {
     const newNote: Partial<Note> = {
       title: 'タイトル',
@@ -30,6 +32,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, onSelectNote, onDeleteNote, 
     onAddNote(newNote);
   };
 
+  // 編集モードの切り替え処理
   const toggleEditing = () => {
     setIsEditing(!isEditing);
   };
@@ -41,27 +44,30 @@ const NoteList: React.FC<NoteListProps> = ({ notes, onSelectNote, onDeleteNote, 
         <h1 className='flex items-center pl-4px text-title font-bold'>ServiceName</h1>
       </div>
       <div className='flex-1 pl-40px overflow-scroll'>
-        {notes.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()).map(note => (
-          <div
-            key={note.id}
-            className={`flex items-center justify-between h-44px w-full pr-10px rounded ${selectedNoteId === note.id ? 'bg-backgroundLight text-brandColor font-bold' : ''}`}
-          >
-            <button
-              className="flex-1 text-left py-10px pl-10px mr-10px truncate hover:opacity-50"
-              onClick={() => handleSelectNote(note)}
+        {notes
+          .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()) // ノートを作成日時が古い順にソート
+          .map(note => (
+            <div
+              key={note.id}
+              className={`flex items-center justify-between h-44px w-full pr-10px rounded ${selectedNoteId === note.id ? 'bg-backgroundLight text-brandColor font-bold' : ''}`}
             >
-              {note.title}
-            </button>
-            {isEditing &&
               <button
-                onClick={() => onDeleteNote(note.id)}
-                className='hover:bg-buttonSecondaryHover rounded-sm'
+                className="flex-1 text-left py-10px pl-10px mr-10px truncate hover:opacity-50"
+                onClick={() => handleSelectNote(note)}
               >
-                <img src={deleteIcon} alt='Delete' className='h-24px w-24px'/>
+                {note.title}
               </button>
-            }
-          </div>
-        ))}
+              {isEditing && // 編集中のみ削除ボタンを表示
+                <button
+                  onClick={() => onDeleteNote(note.id)}
+                  className='hover:bg-buttonSecondaryHover rounded-sm'
+                >
+                  <img src={deleteIcon} alt='Delete' className='h-24px w-24px'/>
+                </button>
+              }
+            </div>
+          ))
+        }
       </div>
       <div className='h-60px pl-40px pr-10px py-10px bg-backgroundLight dark:bg-backgroundDark'>
         <EditControls

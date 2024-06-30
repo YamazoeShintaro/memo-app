@@ -5,15 +5,15 @@ import newPageIcon from '../../assets/icon/new.svg';
 import doneIcon from '../../assets/icon/done.svg';
 
 type EditControlsProps = {
-  isEditing: boolean;
-  onToggleEditing: () => void;
-  onAddNote: () => void;
+  isEditing: boolean; // 編集モードかどうかを示すフラグ
+  onToggleEditing: () => void; // 編集モードのトグルを行う関数
+  onAddNote: () => void; // 新しいノートを追加する関数
 }
 
 const EditControls: React.FC<EditControlsProps> = ({ isEditing, onToggleEditing, onAddNote }) => {
   return (
     <>
-      {isEditing ? (
+      {isEditing ? ( // 編集モードの場合
         <div className='flex justify-between'>
           <button
             onClick={onAddNote}
@@ -34,7 +34,7 @@ const EditControls: React.FC<EditControlsProps> = ({ isEditing, onToggleEditing,
             <p className='text-minimum text-white'>Done</p>
           </button>
         </div>
-      ) : (
+      ) : ( // 非編集モードの場合
         <div className='text-right'>
           <button
             onClick={onToggleEditing}

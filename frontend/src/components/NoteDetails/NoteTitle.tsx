@@ -10,13 +10,15 @@ type NoteTitleProps = {
 }
 
 const NoteTitle: React.FC<NoteTitleProps> = ({ title, onSave }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(title);
+  const [isEditing, setIsEditing] = useState(false); // 編集モードの状態を管理
+  const [editedTitle, setEditedTitle] = useState(title); // 編集されたノートのタイトルを管理
 
+  // ノートの本文が変更された場合にeditedTitleを更新
   useEffect(() => {
     setEditedTitle(title);
   }, [title]);
 
+  // タイトルを保存するハンドラー
   const handleSave = () => {
     onSave(editedTitle);
     setIsEditing(false);
@@ -24,7 +26,7 @@ const NoteTitle: React.FC<NoteTitleProps> = ({ title, onSave }) => {
 
   return (
     <div>
-      {isEditing ? (
+      {isEditing ? ( // 編集モードの場合
         <div className='flex justify-between'>
           <input
             type="text"
@@ -53,7 +55,7 @@ const NoteTitle: React.FC<NoteTitleProps> = ({ title, onSave }) => {
             </button>
           </div>
         </div>
-      ) : (
+      ) : ( // 非編集モードの場合
         <div className='flex justify-between'>
           <h2 className='flex-1 px-30px text-left text-title font-bold text-textRegular truncate'>{editedTitle}</h2>
           <button

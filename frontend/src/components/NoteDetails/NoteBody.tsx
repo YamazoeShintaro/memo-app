@@ -5,17 +5,19 @@ import saveIcon from '../../assets/icon/save.svg';
 
 type NoteBodyProps = {
   body: string;
-  onSave: (newBody: string) => void;
+  onSave: (newBody: string) => void; // 本文を保存するための関数
 }
 
 const NoteBody: React.FC<NoteBodyProps> = ({ body, onSave }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedBody, setEditedBody] = useState(body);
+  const [isEditing, setIsEditing] = useState(false); // 編集モードの状態を管理
+  const [editedBody, setEditedBody] = useState(body); // 編集されたノートの本文を管理
 
+  // ノートの本文が変更された場合にeditedBodyを更新
   useEffect(() => {
     setEditedBody(body);
   }, [body]);
 
+  // 本文を保存するハンドラー
   const handleSave = () => {
     onSave(editedBody);
     setIsEditing(false);
@@ -23,7 +25,7 @@ const NoteBody: React.FC<NoteBodyProps> = ({ body, onSave }) => {
 
   return (
     <div className='flex flex-col h-full overflow-scroll'>
-      {isEditing ? (
+      {isEditing ? ( // 編集モードの場合
         <div className='flex-1 flex'>
           <textarea
             value={editedBody}
@@ -51,7 +53,7 @@ const NoteBody: React.FC<NoteBodyProps> = ({ body, onSave }) => {
             </button>
           </div>
         </div>
-      ) : (
+      ) : ( // 非編集モードの場合
         <div className='flex-1 flex overflow-scroll'>
           <div className='w-full h-full p-30px mr-20px bg-white rounded-lg overflow-scroll'>
             <p className='text-body text-textRegular whitespace-pre-wrap'>{editedBody}</p>
